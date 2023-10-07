@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+    <form method="post" novalidate style="width: 400px;">
+        {% csrf_token %}
+        <!-- username input -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="username_id">Username</label>
+            <input type="email" id="username_id" class="form-control" name="username"/>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="password_id">Password</label>
+            <input type="password" id="password_id" class="form-control" name="password"/>
+        </div>
+
+        <!-- 2 column grid layout for inline styling -->
+        <div class="row mb-4">
+            <div class="col">
+                <!-- Checkbox -->
+                <div class="form-check">
+                    <label class="form-check-label" for="remember_id"> Remember me </label>
+                    <input class="form-check-input" type="checkbox" value="" id="remember_id"/>
+                </div>
+            </div>
+            <div class="col">
+                <!-- Simple link -->
+                <a href="{% url 'signup' %}">Don't have an account</a>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div style="margin-top:40px; margin-bottom: 50px">
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <h1>{{ title_site }} Task</h1>
+        </div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <!-- Title -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="id_title">{{ form.title.label }}</label>
+                <input type="text" name="title" id="id_title" class="form-control"
+                       value="{% if form.title.value != None %}{{form.title.value}}{%endif%}">
+                {% if form.title.errors %}
+                <div class="error">
+                    {% for error in form.title.errors %}
+                    <p style="color: red;">*{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <!-- Description -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="descriptionId">{{ form.description.label }}</label>
+                <textarea name="description" class="form-control" id="descriptionId" rows="8">{% if form.description.value != None %} {{form.description.value}} {% endif %}</textarea>
+                {% if form.description.errors %}
+                <div class="error">
+                    {% for error in form.description.errors %}
+                    <p style="color: red;">*{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Completed -->
+            <div class="form-check mb-4">
+                <input class="form-check-input me-2" type="checkbox" id="completedId" name="completed" {% if form.completed.value %} checked {% endif %}/>
+                <label class="form-check-label" for="completedId">
+                    Completed
+                </label>
+                {% if form.completed.errors %}
+                <div class="error">
+                    {% for error in form.completed.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Submit and Delete button -->
+            <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-primary" type="submit" name="save">Save</button>
+                {% if title_site == 'Update' %}
+                <button class="btn btn-danger" type="submit" name="delete">Delete</button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

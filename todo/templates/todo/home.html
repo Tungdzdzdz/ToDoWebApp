@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-center" style="margin-top:100px; margin-bottom: 50px;">
+    <div class="list-group list-group-light" style="width: 400px;">
+        {% for task in tasks %}
+        <a class="list-group-item d-flex justify-content-between align-items-center list-group-item-action" href="{% url 'update' task.id %}">
+            {{ task }}
+            <span class="badge rounded-pill text-bg-{% if task.completed %}success{% else %}danger{% endif %}">{% if task.completed %}Completed{% else %}Not Completed{%endif%}</span>
+        </a>
+        {% endfor %}
+        <nav aria-label="Page navigation example" style="margin-top: 10px;">
+            <ul class="pagination justify-content-center">
+                {% if tasks.has_previous %}
+                    <li class="page-item"><a class="page-link" href="{% url 'home' tasks.previous_page_number%}">Previous</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{% url 'home' 1%}">Previous</a></li>
+                {% endif %}
+                {% for page_number in tasks.adjusted_elided_pages %}
+                    {% if page_number == tasks.paginator.ELLIPSIS %}
+                        {{page_number}}
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="{% url 'home' page_number%}">{{page_number}}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if tasks.has_next %}
+                    <li class="page-item"><a class="page-link" href="{% url 'home' tasks.next_page_number%}">Next</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{% url 'home' tasks.paginator.num_pages%}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock %}

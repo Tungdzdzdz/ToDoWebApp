@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if title_site %} {{ title_site }} {% else %} Demo {% endif %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<header>
+    {% if title_site != 'Log in' and title_site != 'Sign up'%}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' 1%}"><img
+                    src="https://www.zdnet.com/a/img/2022/03/31/2ee9d31b-fc23-46ec-a03d-97f1b2e66759/microsoft-to-do-logo.png"
+                    height="30px"></a>
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if title_site == 'Home'%}active{%endif%}" href="{% url 'home' 1%}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if title_site == 'Create'%}active{%endif%}" href="{% url 'create' %}">New
+                            Task</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if title_site == 'Profile'%}active{%endif%}" href="{% url 'profile' %}">My Profile</a>
+                    </li>
+                </ul>
+            </div>
+            <form class="d-flex input-group w-auto">
+                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"/>
+                <button class="btn btn-primary rounded" type="submit" style="margin-left: 5px;">Search</button>
+            </form>
+            <form class="d-flex input-group w-auto" action="{% url 'login' %}" style="margin-left: 5px;">
+                {% if not request.user.is_authenticated %}
+                <button class="btn btn-primary" type="submit" name="Login">Login</button>
+                {% else %}
+                <button class="btn btn-danger" type="submit" name="Logout">Logout</button>
+                {% endif %}
+            </form>
+        </div>
+    </nav>
+    {% else %}
+    {% if title_site == 'Log in' %}
+    <div class="d-flex justify-content-center align-items-center" style="margin-top: 40px;">
+        <h1>Log in</h1>
+    </div>
+    {% endif %}
+    {% endif %}
+</header>
+<main>
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+<footer style="background: rgb(238 238 238);">
+    <p>&copy; 2023 Group 12. All right is reserved.</p>
+    <p>Contact: email@example.com</p>
+</footer>
+</body>
+</html>
